@@ -29,6 +29,6 @@ Application design:
 
 Reference(s):
 
+- [The Hypermedia Drive Application(HDA) architecture](https://htmx.org/essays/hypermedia-driven-applications/)
 - use Hypermedia as the Engine of Applcation State [hateoas](https://en.wikipedia.org/wiki/HATEOAS)
-
 - [Deploy goland webapp on heroku](https://dzone.com/articles/deploying-a-simple-golang-webapp-on-heroku)
