@@ -9,7 +9,7 @@ General features:
 
 Installation (deploy local):
 
-1. docker build -t go-jokes
+1. docker build -t go-jokes .
 2. docker run --rm -p 5000:5000 go-jokes
 
 Installation (deploy to Heroku):
@@ -31,4 +31,4 @@ Reference(s):
 
 - use Hypermedia as the Engine of Applcation State [hateoas](https://en.wikipedia.org/wiki/HATEOAS)
 
-[Deploy goland webapp on heroku](https://dzone.com/articles/deploying-a-simple-golang-webapp-on-heroku)
+- [Deploy goland webapp on heroku](https://dzone.com/articles/deploying-a-simple-golang-webapp-on-heroku)
