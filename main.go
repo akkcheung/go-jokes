@@ -31,7 +31,7 @@ func main() {
 	r := mux.NewRouter()
 
 	//db, err := gorm.Open(sqlite.Open("my-jokes.db"), &gorm.Config{})
-	db, err := gorm.Open(sqlite.Open("file:memory:?cache=shared"), &gorm.Config{})
+	db, err := gorm.Open(sqlite.Open("file::memory:?cache=shared"), &gorm.Config{})
 
 	if err != nil {
 		panic("failed to connect database")
