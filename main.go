@@ -40,16 +40,12 @@ func main() {
 	DB = db
 
 	db.AutoMigrate(&Joke{}, &User{})
+	setup()
 
 	fs := http.FileServer(http.Dir("assets/"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
 
 	templates = template.Must(template.ParseGlob("views/*.html"))
-
-	//http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request){
-	r.HandleFunc("/url", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintf(w, "Helo you've requested: %s\n", r.URL.Path)
-	})
 
 	r.HandleFunc("/", indexHandler).Methods("GET")
 
@@ -97,7 +93,8 @@ type User struct {
 }
 
 func indexHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Helo you've requested: %s\n", r.URL.Path)
+	//fmt.Fprintf(w, "Helo you've requested: %s\n", r.URL.Path)
+	http.Redirect(w, r, "/jokes", http.StatusFound)
 }
 
 func signInHandler(w http.ResponseWriter, r *http.Request) {
@@ -541,7 +538,7 @@ func jokeGetHandler(w http.ResponseWriter, r *http.Request) {
 		err = tmpl.ExecuteTemplate(w, "content", data)
 
 	} else {
-		tmpl, err = template.ParseFiles("views/base.html", "views/header.html", "views/sidebar.html", "views/show.html")
+		tmpl, err = template.ParseFiles("views/base.html", "views/header.html", "views/sidebar.html", "views/jokes.html", "views/show.html")
 
 		err = tmpl.ExecuteTemplate(w, "base", data)
 	}
@@ -592,7 +589,7 @@ func jokeGetNewHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Header.Get("HX-Request") == "true" {
 		tmpl, err = template.ParseFiles("views/new.html")
 	} else {
-		tmpl, err = template.ParseFiles("views/base.html", "views/header.html", "views/sidebar.html", "views/new.html")
+		tmpl, err = template.ParseFiles("views/base.html", "views/header.html", "views/sidebar.html", "views/jokes.html", "views/new.html")
 	}
 
 	if err != nil {
@@ -686,4 +683,40 @@ func getLogin(r *http.Request) string {
 		return login
 	}
 	return ""
+}
+
+func setup() {
+
+	hashedPassword, err := bcrypt.GenerateFromPassword([]byte("nopass"), 8)
+
+	user := User{
+		Login:    "user",
+		Password: string(hashedPassword),
+	}
+
+	if DB.Create(&user).Error != nil {
+		fmt.Println(err)
+	}
+
+	lastInsertId := user.ID
+
+	ja := Joke{
+		Name:    "First Joke",
+		Content: "This is my first joke.",
+		UserID:  lastInsertId,
+	}
+
+	if DB.Create(&ja).Error != nil {
+		fmt.Println(err)
+	}
+
+	jb := Joke{
+		Name:    "Second Joke",
+		Content: "This is my second joke.",
+		UserID:  lastInsertId,
+	}
+
+	if DB.Create(&jb).Error != nil {
+		fmt.Println(err)
+	}
 }

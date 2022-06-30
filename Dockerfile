@@ -10,6 +10,5 @@ RUN adduser -S -D -H -h /app appuser
 USER appuser
 COPY --from=builder /build/go-jokes /app/ 
 COPY views/ /app/views
-COPY my-jokes.db /app
 WORKDIR /app
 CMD ["./go-jokes"]
