@@ -1,0 +1,40 @@
+{{define "content"}}
+{{if .Success}}
+<div hx-get="/jokes/{{.LastInsertId}}" hx-trigger="load delay:3s" hx-swap="outerHTML">
+		<p style="color:blue">Created new joke.</p>
+	</div>
+{{else}}
+<!-- <form action="/jokes" method="post"> -->
+<div class="col-8"> 
+<form 
+	hx-post="/jokes" 
+	hx-target="this" 
+	hx-swap="outerHTML">
+	<!-- <div class="col-8"> -->
+		<div class="form-group">
+			<label class="form-label" for="name">
+				<span style="color: hsl(0, 0%, 100%);">Name</span>
+			</label>
+			<input class="form-input" type="text" name="name" id="name" placeholder="Name" value="{{.Name}}">
+			{{ if .Errors }}
+			{{ with .Errors.name }}
+				<p style="color:red">{{ . }}</p>
+			{{ end }}
+			{{ end }}
+			<label class="form-label" for="content">
+				<span style="color: hsl(0, 0%, 100%);">Content</span>
+			</label>
+			<textarea name="content" id="conteent" rows="10" cols="50" placeholder="Content" value={{.Content}}></textarea>
+			{{ if .Errors }}
+			{{ with .Errors.content}}
+				<p style="color:red">{{ . }}</p>
+			{{ end }}
+			{{ end }}
+
+			<br>
+			<input class="btn btn-primary" type="submit" value="Add">
+		</div>	
+	</form>
+</div>
+{{end}}
+{{end}}

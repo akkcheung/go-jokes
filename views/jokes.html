@@ -1,0 +1,14 @@
+{{define "jokes"}}
+	<ul>
+		{{range .Jokes}}
+			<li>
+				<!-- <a href="/jokes/{{.ID}}"> -->
+				<a class="text-warning" 
+					 hx-get="/jokes/{{.ID}}"
+					 hx-target="#content"
+					 hx-push-url="/jokes/{{.ID}}"
+				>{{.Name}}</a>
+			</li>
+		{{end}}
+	</ul>
+{{end}}

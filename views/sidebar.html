@@ -1,0 +1,27 @@
+{{define "sidebar"}}
+	{{if .Jokes }}
+	<br>
+		<!-- <a class="btn" href="/jokes/random"> -->
+		<a class="text-warning" 
+			 hx-get="/jokes/random"
+			 hx-target="#content"
+			 hx-push-url="/jokes/random">
+			Get a random joke
+		</a>
+
+	<br>
+	<h6 style="color: hsl(0, 0%, 100%);">Here are a few more jokes to check out:</h6>
+	{{ end }}
+	<div hx-get="/jokes" hx-trigger="newJoke from:body, deleteJoke from:body"> 
+	{{template "jokes" .}}
+	</div>
+
+	<!-- <a class="btn" href="/jokes/new" > -->
+	<a class="btn btn-primary" 
+		 hx-get="/jokes/new"
+		 hx-target="#content"
+		 hx-push-url="/jokes/new"
+	>
+		Add your own
+	</a>
+{{end}}

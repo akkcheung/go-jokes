@@ -1,0 +1,39 @@
+{{define "base"}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
+	<link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css">
+	<link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css">
+
+	<script src="https://unpkg.com/htmx.org@1.7.0"></script>
+	<title>Remix: So great, it's funny!</title>
+</head>
+<body class="font-body text-white" style=" background-color: hsl(278, 73%, 19%)">
+
+<div class="container">
+
+	<div class="jokes=header">
+		{{template "header" .}}
+	</div>
+
+	<div class="jokes-main">
+		<div class="columns">
+			<div class="column col-4">
+				{{template "sidebar" .}}
+			</div>
+
+			<div class="column col-8" id="content">
+				{{template "content" .}}
+			</div>
+		</div>
+	</div>
+
+</div>
+
+</body>
+</html>
+
+{{end}}

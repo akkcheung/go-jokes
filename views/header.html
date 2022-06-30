@@ -1,0 +1,18 @@
+{{define "header"}}
+	<header class="navbar">
+		<section class="nvabar-section">
+			<div>
+				<h2><a href="/jokes" >J<span class="logo">🤪</span>kes</a></h2>
+			</div>
+		</section>
+		</section>
+		<section class="nvabar-section">
+			{{ if .IsSignIn }}
+			<span style="color: hsl(0, 0%, 100%);">Hi {{ .Login }}</span>
+					<a href="/signout" > Sign Out	</a>
+			{{ else }}
+					<a href="/signin" > Sign In	</a>
+			{{ end }}
+		</section>
+	</header>
+{{end}}
