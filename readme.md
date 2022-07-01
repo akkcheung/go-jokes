@@ -1,4 +1,4 @@
-This is a clone of [Remix Jokes](https://remix-jokes.lol/jokes) using golang, [htmx](https://htmx.org) and [Spectre.css Framework](https://picturepan2.github.io/spectre/) only.
+This is a clone of [Remix Jokes](https://remix-jokes.lol/jokes) using Golang, [htmx](https://htmx.org) and [Spectre.css Framework](https://picturepan2.github.io/spectre/) only.
 
 General features:
 
@@ -29,5 +29,6 @@ Installation (deploy to Heroku):
 
 Reference(s):
 
+- [Interview with Senior JS Developer in 2022](https://www.youtube.com/watch?v=Uo3cL4nrGOk&t=169s)
 - [The Hypermedia Drive Application(HDA) architecture](https://htmx.org/essays/hypermedia-driven-applications/)
 - [Deploy goland webapp on heroku](https://dzone.com/articles/deploying-a-simple-golang-webapp-on-heroku)
