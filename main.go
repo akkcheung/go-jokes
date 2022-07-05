@@ -150,31 +150,46 @@ func signInHandler(w http.ResponseWriter, r *http.Request) {
 			//result := DB.Where(&User{Login: login, Password: ""}).First(&user )
 			result := DB.First(&user, "login = ?", login)
 			err = result.Error
+
 			if err != nil {
-				//fmt.Println(err)
-				http.Error(w, err.Error(), http.StatusInternalServerError)
-				return
+				if result.RowsAffected == 0 {
+					fmt.Sprintf("result.RowsAffected :%s\n" + strconv.FormatInt(result.RowsAffected, 10))
+				} else {
+					//fmt.Println(err)
+					http.Error(w, err.Error(), http.StatusInternalServerError)
+					return
+				}
 			}
 
-			if err = bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password)); err != nil {
-				http.Error(w, err.Error(), http.StatusInternalServerError)
+			//log.Println("result.RowsAffected :" + result.RowsAffected)
+			fmt.Sprintf("result.RowsAffected :%s\n" + strconv.FormatInt(result.RowsAffected, 10))
+
+			if result.RowsAffected > 0 {
+				if err = bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password)); err != nil {
+					http.Error(w, err.Error(), http.StatusInternalServerError)
+					return
+				}
+
+				//log.Println("login success\n")
+				data["Success"] = true
+
+				session.Values["authenticated"] = true
+				session.Values["login"] = login
+				session.Save(r, w)
+
+				if r.Header.Get("HX-Request") == "true" {
+					w.Header().Set("HX-Redirect", "/jokes")
+				} else {
+					http.Redirect(w, r, "/jokes", http.StatusFound)
+				}
 				return
-			}
 
-			//log.Println("login success\n")
-			data["Success"] = true
-
-			session.Values["authenticated"] = true
-			session.Values["login"] = login
-			session.Save(r, w)
-
-			if r.Header.Get("HX-Request") == "true" {
-				w.Header().Set("HX-Redirect", "/jokes")
 			} else {
-				http.Redirect(w, r, "/jokes", http.StatusFound)
+				log.Println("RecordNotFound")
+				errors["recordNotFound"] = "Login or Password is not correct"
+				data["Errors"] = errors
 			}
 
-			return
 		}
 	}
 

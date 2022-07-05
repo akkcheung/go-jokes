@@ -1,45 +1,50 @@
 {{define "content"}}
-	<!-- <form action="/signin" method="post"> -->
-	<form 
-		hx-post="/signin" 
-		hx-target="this" 
-		hx-swap="outerHTML">
-		<div class="column col-4">
-			<div class="form-group">
-				<label class="form-label" for="login">
-					<span style="color: hsl(0, 0%, 100%);">Login</span>
-				</label>
-				<input class="form-input" type="text" name="login" id="login" placeholder="user" value="{{ .Login }}">
-				{{ if .Errors }}
-				{{ with .Errors.login }}
-					<p style="color:red">{{ . }}</p>
-				{{ end }}
-				{{ end }}
-				<label class="form-label" for="password">
-					<span style="color: hsl(0, 0%, 100%);">Password</span>
-				</label>
-				<input class="form-input" type="password" name="password" id="password" placeholder="nopass" value="{{ .Password }}"></input>
-				{{ if .Errors }}
-				{{ with .Errors.password }}
-					<p style="color:red">{{ . }}</p>
-				{{ end }}
-				{{ end }}
 
-				<br/>
-				<input class="btn btn-primary" type="submit" value="Sign In">
-			</div>
+	<!-- <form action="/signin" method="post"> -->
+<form 
+	hx-post="/signin" 
+	hx-target="this" 
+	hx-swap="outerHTML">
+	<div class="column col-4">
+{{ if .Errors }}
+	{{with .Errors.recordNotFound}}
+			<p style="color:red">{{ . }}</p>
+	{{end}}
+{{end}}
+		<div class="form-group">
+			<label class="form-label" for="login">
+				<span style="color: hsl(0, 0%, 100%);">Login</span>
+			</label>
+			<input class="form-input" type="text" name="login" id="login" placeholder="user" value="{{ .Login }}">
+			{{ if .Errors }}
+			{{ with .Errors.login }}
+				<p style="color:red">{{ . }}</p>
+			{{ end }}
+			{{ end }}
+			<label class="form-label" for="password">
+				<span style="color: hsl(0, 0%, 100%);">Password</span>
+			</label>
+			<input class="form-input" type="password" name="password" id="password" placeholder="nopass" value="{{ .Password }}"></input>
+			{{ if .Errors }}
+			{{ with .Errors.password }}
+				<p style="color:red">{{ . }}</p>
+			{{ end }}
+			{{ end }}
 
 			<br/>
-			<!-- <a class="btn" href="/signup">Sign Up</a> -->
-			<a class="btn"
-				hx-get="/signup"
-				hx-target="#content"
-				hx-swap="innerHTML"
-				hx-push-url="/signup"
-				>
-				Sign Up
-			</a> 
+			<input class="btn btn-primary" type="submit" value="Sign In">
 		</div>
-	</form>
 
+		<br/>
+		<!-- <a class="btn" href="/signup">Sign Up</a> -->
+		<a class="btn"
+			hx-get="/signup"
+			hx-target="#content"
+			hx-swap="innerHTML"
+			hx-push-url="/signup"
+			>
+			Sign Up
+		</a> 
+	</div>
+</form>
 {{end}}
